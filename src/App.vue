@@ -25,21 +25,21 @@ export default {
 
 <style>
   * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
   }
   ul {
-    list-style-type: none;
+  list-style-type: none;
   }
   .container {
-    max-width: 1168px;
-    margin: auto;
+  max-width: 1168px;
+  margin: auto;
   }
   button, input {
-    outline: none;
+  outline: none;
   }
   a {
-    text-decoration: none;
+  text-decoration: none;
   }
 </style>

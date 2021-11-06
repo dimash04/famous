@@ -15,7 +15,7 @@
                 <p class="picture-buy-price-now">1 000 000 $</p>
               </div>
               <div>
-                <button class="picture-buy-btn" @click="goBusket" id="0">Купить</button>
+                <button class="picture-buy-btn" @click="goBusket('$event')" id="0">Купить</button>
               </div>
             </div>
           </div>
@@ -29,7 +29,7 @@
                 <p class="picture-buy-price-now">3 000 000 $</p>
               </div>
               <div>
-                <button class="picture-buy-btn" @click="goBusket" id="1">Купить</button>
+                <button class="picture-buy-btn" @click="goBusket('$event')" id="1">Купить</button>
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
                 <p class="picture-buy-price-now">5 000 000 $</p>
               </div>
               <div>
-                <button class="picture-buy-btn" @click="goBusket" id="2">Купить</button>
+                <button class="picture-buy-btn" @click="goBusket('$event')" id="2">Купить</button>
               </div>
             </div>
           </div>
@@ -76,24 +76,24 @@ export default {
       busketEl: []
     }
   },
+  created() {
+    axios
+      .get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => this.pictures = response.data)
+      .catch(error => {
+        console.error(error)
+        this.errored = true;
+      });
+  },
   methods: {
-    goBusket() {
+    goBusket(event) {
       document.addEventListener('click', (event) => {
         console.log(event.target.id)
         if (event.target.classList == 'picture-buy-btn') {
           if (typeof window !== 'undefined') {
-          axios
-            .get('https://jsonplaceholder.typicode.com/posts/1')
-            .then(response => this.pictures = response.data)
-            .catch(error => {
-            console.error(error)
-              this.errored = true;
-            });
-          setTimeout(()=>{
-            this.busketEl.push(this.pictures)
-          }, 500)
+          this.busketEl.push(this.pictures[event.target.id])
           localStorage.setItem('busket', JSON.stringify(this.busketEl))
-          if (this.busketEl != 0) {
+          if (this.busketEl.length > 0) {
             event.target.innerHTML = 'В корзине';
             event.target.classList = 'picture-buy-btn-active';
             event.target.setAttribute('disabled', 'disabled')
@@ -101,6 +101,7 @@ export default {
           }
         }
       })
+      console.log(event)
     }
   }
 }
